@@ -1,0 +1,94 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+
+        int current = arr.get(0);
+        int maxSubarray = arr.get(0);
+
+        int maxSubsequence = 0;
+        int maxNegative = arr.get(0);
+
+        for (int i = 0; i < arr.size(); i++) {
+
+            int value = arr.get(i);
+
+            // Maximum subarray sum - Kadane's Algorithm
+            if (i > 0) {
+                current = Math.max(value, current + value);
+                maxSubarray = Math.max(maxSubarray, current);
+            }
+
+            // Maximum subsequence sum
+            if (value > 0) {
+                maxSubsequence += value;
+            }
+
+            if (value > maxNegative) {
+                maxNegative = value;
+            }
+        }
+
+        // If all elements are negative
+        if (maxSubsequence == 0) {
+            maxSubsequence = maxNegative;
+        }
+
+        List<Integer> result = new ArrayList<Integer>();
+        result.add(maxSubarray);
+        result.add(maxSubsequence);
+
+        return result;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+
+            int n = sc.nextInt();
+
+            List<Integer> arr = new ArrayList<Integer>();
+
+            for (int i = 0; i < n; i++) {
+                arr.add(sc.nextInt());
+            }
+
+            List<Integer> result = maxSubarray(arr);
+
+            System.out.println(result.get(0) + " " + result.get(1));
+        }
+
+        sc.close();
+    }
+}
+
+output
+
+Input (stdin)
+6
+1
+1
+6
+-1 -2 -3 -4 -5 -6
+2
+1 -2
+3
+1 2 3
+1
+-10
+6
+1 -1 -1 -1 -1 5
+Expected Output
+1 1
+-1 -1
+1 1
+6 6
+-10 -10
+5 6
+
