@@ -32,3 +32,10 @@ public class Solution {
         sc.close();
     }
 }
+
+output
+    
+Input 
+SOSSPSSQSSOR
+Output
+3
